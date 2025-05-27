@@ -4,7 +4,7 @@ uint8_t clearPin = 12;
 uint8_t dataPin = 11;
 uint8_t enablePin = 10;
 
-boolean data[] = { 1, 1, 0, 0, 1, 1, 1, 0 };
+byte data = 0xA;
 
 bool done = false;
 void setup() {
@@ -22,32 +22,18 @@ void loop() {
     sendData();
     done = true;
   }
-
   delay(pause);
 }
 
 void sendData() {
   disableShiftOutput();
-  for (int i = sizeof(data); i >= 0; i--) {
-    clkLow();
-    setDataToShiftRegister(data[i]);
-    clkHigh();
-    delay(pause);
-  }
+  setDataToShiftRegister();
   enableShiftOutput();
 }
 
 
-void setDataToShiftRegister(bool level) {
-  digitalWrite(dataPin, level);
-}
-
-void clkHigh() {
-  digitalWrite(clkPin, HIGH);
-}
-
-void clkLow() {
-  digitalWrite(clkPin, LOW);
+void setDataToShiftRegister() {
+  shiftOut(dataPin, clkPin, LSBFIRST, data);
 }
 
 void enableShiftOutput() {
