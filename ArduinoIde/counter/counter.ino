@@ -20,12 +20,10 @@ void loop() {
   Serial.print("Main Program: ");
   Serial.println(counter);
   Serial.println(OCR1A);
-
   delay(5000);
 }
 
 ISR(TIMER1_COMPA_vect) {
-
   counter++;  //Counter increases by 1 every second
   Serial.print("Timer: ");
   Serial.println(counter);
